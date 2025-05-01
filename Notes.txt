@@ -2,3 +2,11 @@
     console.log(NaN == NaN) // is false
 
     Reason: NaN is supposed to denote the result of nonsensical compuation, and as such, it isn't equal to any other nonsensical compuation.
+[2] When null , undefined occures either side of operation it is true.
+    Example:
+        null == undefined // true
+        null != undefined // false
+        undefined == null // true
+        undefined != null //false
+    But In Strict type of comparison 
+       null === undefined // false
