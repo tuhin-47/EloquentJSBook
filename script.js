@@ -1,75 +1,82 @@
-//Eloquest JavaScript
-//Chapter 2, Exercise
+//Eloquent JavaScript
+// Chapter 3 [Functions]
+//  closure
 
-// Problem 1.
-// My Soltion
-// print = console.log
-// for(let i = 1; i <= 7; i++){
-//     let ll = i, line=''
-//     while(ll--)
-//         line +='#'
-//     print(line)
-// }
-// //second way
-// print("Applying another way")
-// for(let i = 1; i <=7; i++){
-//     let line = ''
-//     for(let j = 0; j < i; j++)
-//         line +='#'
-//     print(line)
+function wrapValue(n) {
+    let local = n;
+    return () => local;
+}
 
-// }
+const wrap1 = wrapValue(10)
+const wrap2 = wrapValue(20)
+console.log(wrap1())
+console.log(wrap2())
 
-// Solution from book
-for(let line ='#'; line.length < 8; line +='#')
-    console.log(line)
-
-
-
-// Problem 2 
-
-print = console.log
-
-function fizzBuzz(){
-    for(let i = 1; i <=100; i++){
-        if( i % 3 ==0 && i % 5 ==0)
-            print('FizzBuzz')
-        else if( i % 3 == 0)
-            print('Fizz')
-        else if( i % 5 == 0 && i % 3 !=0 )
-            print('Buzz')
-        else
-            print(i)
+function multiplier(factor) {
+    return function(number) {
+        return number * factor
     }
 }
-//fizzBuzz()
 
-//Solution from book
-function fizzBuzzFromBook() {
-    for(let i = 1; i < 100; i++ ){
-        let output = ""
-        if( i % 3 == 0)  output = 'Fizz'
-        if( i % 5 == 0)  output += 'Buzz'
-        console.log(output || i)
+const twice = multiplier(2)
+const trice = multiplier(3)
+
+console.log(twice(100))
+console.log(trice(500))
+
+// More Examples on closure
+
+console.log("More closure examples for better understanding")
+function outer() {
+    let count = 1;
+    function inner() {
+        count +=1;
+        console.log(`count is : ${count}`)
+    }
+    return inner
+}
+
+const closure1 = outer()
+const closure2 = outer()
+closure1() // 2
+closure1() // 3
+closure1() // 4
+closure1() // 5
+
+closure2() // 2
+closure2() // 3
+
+
+// closure example to data privacy
+
+function counter () {
+    let count = 1;
+    return {
+        increment : function () { 
+                                   ++count
+                                   console.log(count)
+        },
+        decrement : function () {
+                                    --count
+                                    console.log(count)
+        },
+        getCount : function () { return count }
     }
 }
-//fizzBuzzFromBook()
+console.log("Counter() Closure ")
+const cc = counter()
+cc.increment()
+cc.increment()
+cc.increment()
 
-function chessBoard() {
-    let boardSize = 8
-    print(`Printing ChessBoard for BoardSize ${boardSize}`)
-    
-    let startLineWithSpace = true
-    let nextPositionToFill = '#'
-    for(let i = 1; i <= boardSize; i++){
-        let line = startLineWithSpace ? ' ' : '#'
-        nextPositionToFill = startLineWithSpace ? '#':' '
-        for(let j = 1; j < boardSize; j++){
-            line += nextPositionToFill;
-            nextPositionToFill = nextPositionToFill == '#' ? ' ': '#'
-        }
-        startLineWithSpace = ! startLineWithSpace;
-        print(line)
-    }
-}
-//chessBoard()
+cc.decrement()
+console.log(cc.getCount());
+console.log("Counter Closure 2")
+const cc2 = counter()
+cc2.decrement()
+cc2.decrement()
+
+cc2.increment()
+cc2.increment()
+cc2.increment()
+console.log(cc2.getCount())
