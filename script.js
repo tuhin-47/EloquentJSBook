@@ -80,3 +80,30 @@ cc2.increment()
 cc2.increment()
 cc2.increment()
 console.log(cc2.getCount())
+
+
+// implementing cache using memoization
+
+function memoize(fn) {
+    const cache = {}
+    return function (...args){
+        let key = args.toString()
+        if(!cache[key]){
+            console.log("Cache MISS, Calculating")
+            cache[key] = fn(...args)
+        }else {
+            console.log("Cache HIT, Retruning Result from cache")
+        }
+        return cache[key]
+    }
+}
+
+function fact(n) {
+    if( n <= 1)
+        return 1;
+    else 
+        return n * fact( n -1)
+}
+
+const factCC = memoize(fact)
+console.log(factCC(5))
